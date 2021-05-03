@@ -11,7 +11,7 @@ public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -61,15 +61,22 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
+                    if(JobData.findByValue(searchTerm).isEmpty()){
+                        System.out.println("No Jobs Available");
+                    }
+
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                    if(JobData.findByColumnAndValue(searchField, searchTerm).isEmpty()){
+                        System.out.println("No Jobs Available");
+                    }
                 }
             }
         }
     }
 
-    // ﻿Returns the key of the selected item from the choices Dictionary
+    // Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
 
         Integer choiceIdx;
@@ -103,14 +110,20 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        for (HashMap<String, String> row : someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+            System.out.println("*****");
+            for (HashMap.Entry<String, String> entry : row.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue());
+            }
+            System.out.println("*****\n");
+        }
     }
 }
